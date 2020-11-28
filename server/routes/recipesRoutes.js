@@ -2,8 +2,24 @@ const express = require('express');
 const Recipe = require('../models/recipes');
 const multer = require('multer');
 const router = express.Router();
-let upload = multer({ dest: 'uploads/' });
+let storage = multer.diskStorage({
+  destination: (req, file, cb)=>{
+    cb(null, './uploads')
+  },
+  filename: (req, file, cb)=>{
+    cb(null, new Date().toISOString().replace(/:/g, '-') + file.originalname)
+  }
+})
+let upload = multer({ storage });
 
 router.post('/recipe/create', upload.single('recipeImg'), (req,res)=>{
-
+  let {title, ingredients, recipe, owner} = req.body
+  let {path} = req.file
+  let rec = new Recipe({
+    title, ingredients, recipe, owner, image: path
+  })
+  res.json(rec)
 })
+
+
+module.exports = router
