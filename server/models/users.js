@@ -24,4 +24,10 @@ const UsersSchema = mongoose.Schema({
   },
 });
 
+UsersSchema.virtual('recipes',{
+  ref: 'recipes',
+  localField: _id,
+  foreignField:'owner'
+})
+
 module.exports = mongoose.model('users', UsersSchema);
