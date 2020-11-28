@@ -27,14 +27,14 @@ router.post('/register', (req, res) => {
     .catch(console.log);
 });
 
-app.post('/signin', (req, res) => {
+router.post('/signin', (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(400).json('Empty Inputs');
   }
   User.findOne({ email: email })
     .then((user) => {
-      const validPass = bcrypt.compareSync(password, user.password);
+      const validPass = bcrybt.compareSync(password, user.password);
       if (validPass) {
         return res.json({
           id: user._id,
