@@ -28,4 +28,11 @@ router.post('/recipe/create', upload.single('recipeImg'), (req, res) => {
     .catch((err) => res.json(err));
 });
 
+app.get('/', (req, res) => {
+  Recipe.find()
+    .sort('-date')
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json('Unable to get data'));
+});
+
 module.exports = router;
