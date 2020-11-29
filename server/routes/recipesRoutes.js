@@ -43,8 +43,23 @@ router.get('/recipe/:id', (req, res) => {
 });
 
 router.delete('/delete/:id', (req, res) => {
-  Post.findByIdAndDelete(req.params.id)
+  Recipe.findByIdAndDelete(req.params.id)
     .then((data) => res.json(data))
-    .catch((err) => res.status(400).json('Unable to delete post'));
+    .catch((err) => res.status(400).json('Unable to delete recipe'));
 });
+
+router.post('/edit/:id', (req, res) => {
+  const { title, ingredients, recipe } = req.body;
+  if (!title || !ingredients || !recipe) {
+    return res
+      .status(400)
+      .json('You can not submit empty Title and/or Description');
+  }
+  Recipe.findByIdAndUpdate(req.params.id, {
+    $set: { title, ingredients, recipe, date: Date.now() },
+  })
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json(err));
+});
+
 module.exports = router;
