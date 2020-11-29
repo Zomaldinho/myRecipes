@@ -41,4 +41,10 @@ router.get('/recipe/:id', (req, res) => {
     .then((data) => res.json(data))
     .catch((err) => res.json(err));
 });
+
+router.delete('/delete/:id', (req, res) => {
+  Post.findByIdAndDelete(req.params.id)
+    .then((data) => res.json(data))
+    .catch((err) => res.status(400).json('Unable to delete post'));
+});
 module.exports = router;
