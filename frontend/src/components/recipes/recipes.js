@@ -13,6 +13,11 @@ class Recipes extends Component {
       .then((data) => this.setState({ data }));
   }
 
+  showOne(i){
+    this.props.handeldRecipe(i)
+    this.props.routeChange('one')
+  }
+
   render() {
     console.log(this.state.data);
     return (
@@ -29,9 +34,9 @@ class Recipes extends Component {
                 <h5 className="card-title">{recipe.title}</h5>
                 <p className="card-text">{recipe.ingredients}</p>
                 <p className="card-text">{recipe.recipe}</p>
-                <a href="#" className="btn btn-primary">
+                <button onClick={()=>this.showOne(recipe._id)} className="btn btn-primary">
                   More Details
-                </a>
+                </button>
               </div>
             </div>
           );

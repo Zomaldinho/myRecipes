@@ -1,20 +1,36 @@
+import React, { Component } from 'react';
 import './App.css';
 import Recipes from './components/recipes/recipes';
-import oneRecipe from './components/oneRecipe/oneRecipe';
+import OneRecipe from './components/oneRecipe/oneRecipe';
 
-function App() {
-  const [route, setRoute] = useState();
 
-  Routing = (newRoute) => {
-    setRoute(newRoute);
+class App extends Component {
+  constructor(){
+    super()
+    this.state={
+      route: '',
+      handeledReipeId: null
+    }
+  }
+  Routing = (route) => {
+    this.setState({ route: route });
+  };
+  handeldRecipe = (id) => {
+    this.setState({ handeledReipeId: id });
   };
 
-  return (
-    <div className="App container">
-      <h1>Hello</h1>
-      {route == 'one' ? <oneRecipe></oneRecipe> : <Recipes></Recipes>}
-    </div>
-  );
+  render(){
+    return (
+      <div className="App container">
+        <h1>Hello</h1>
+        {this.state.route === 'one' ? (
+          <OneRecipe routeChange={this.Routing} id={this.state.handeledReipeId} />
+        ) : (
+          <Recipes routeChange={this.Routing} handeldRecipe={this.handeldRecipe} />
+        )}
+      </div>
+    );
+  }
 }
 
 export default App;
