@@ -43,7 +43,7 @@ router.get('/recipe/:id', (req, res) => {
 });
 
 router.delete('/delete/:id', (req, res) => {
-  Recipe.findByIdAndDelete(req.params.id)
+  Recipe.findByIdAndRemove(req.params.id)
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json('Unable to delete recipe'));
 });
@@ -57,7 +57,7 @@ router.post('/edit/:id', (req, res) => {
   }
   Recipe.findByIdAndUpdate(req.params.id, {
     $set: { title, ingredients, recipe, date: Date.now() },
-  })
+  }, {new:true})
     .then((data) => res.json(data))
     .catch((err) => res.status(400).json(err));
 });

@@ -15,7 +15,14 @@ class OneRecipe extends Component {
   componentDidMount() {
     fetch(`http://localhost:5000/recipe/${this.props.id}`)
       .then((response) => response.json())
-      .then((recipe) => this.setState({ recipe }));
+      .then((recipe) =>
+        this.setState({
+          recipe,
+          title: recipe.title,
+          ingredients: recipe.ingredients,
+          rec: recipe.recipe,
+        })
+      );
   }
 
   onInputChange = (e) => {
@@ -29,9 +36,33 @@ class OneRecipe extends Component {
     }
   };
 
-  onSubmit = ()=>{
-    console.log(this.state)
-  }
+  onSubmit = () => {
+    console.log(this.state);
+
+    if (!this.state.title || !this.state.ingredients || !this.state.rec) {
+      return alert(
+        'You can not submit empty Title, Ingredients and/or Recipe'
+      );
+    }
+    fetch(`http://localhost:5000/edit/${this.props.id}`, {
+      method: 'post',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        title: this.state.title,
+        ingredients: this.state.ingredients,
+        recipe: this.state.rec,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data)
+        if (data._id) {
+          this.setState({ recipe: data });
+        }
+      })
+      .catch((err) => console.log(err));
+    this.setState({ editStatus: false });
+  };
 
   edit = () => {
     this.setState({ editStatus: true });
@@ -46,7 +77,6 @@ class OneRecipe extends Component {
       fetch(`http://localhost:5000/delete/${this.props.id}`, {
         method: 'delete',
       })
-        .then(setTimeout(() => {}, 2000))
         .then(this.props.routeChange('recipes'))
         .catch((err) => console.log(err));
     }
@@ -59,7 +89,7 @@ class OneRecipe extends Component {
           <img
             className="card-img-top"
             src={'http://localhost:5000/' + recipe.image}
-            alt="Card image cap"
+            alt="Card cap"
           />
           <div className="card-body">
             <h5 className="card-title">{recipe.title}</h5>
@@ -84,36 +114,36 @@ class OneRecipe extends Component {
         {this.state.editStatus ? (
           <div>
             <h1>Edit Form</h1>
-            <form onSubmit={e => e.preventDefault()}>
-              <div class="form-group">
+            <form onSubmit={(e) => e.preventDefault()}>
+              <div className="form-group">
                 <label>Title</label>
                 <input
                   name="title"
-                  class="form-control"
+                  className="form-control"
                   defaultValue={recipe.title}
                   onChange={(txt) => this.onInputChange(txt)}
                 />
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <label>Ingredients</label>
                 <input
                   name="ingredients"
-                  class="form-control"
+                  className="form-control"
                   defaultValue={recipe.ingredients}
                   onChange={(txt) => this.onInputChange(txt)}
                 />
               </div>
-              <div class="form-group">
+              <div className="form-group">
                 <label>recipe</label>
                 <input
                   name="recipe"
-                  class="form-control"
+                  className="form-control"
                   defaultValue={recipe.recipe}
                   onChange={(txt) => this.onInputChange(txt)}
                 />
               </div>
 
-              <button onClick={()=>this.onSubmit()} class="btn btn-primary">
+              <button type="button" onClick={() => this.onSubmit()} className="btn btn-primary">
                 Submit
               </button>
             </form>
