@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import Recipes from './components/recipes/recipes';
-import OneRecipe from './components/oneRecipe/oneRecipe';
-
+import OneRecipe from './components/oneRecipe/oneRecipe'
 
 class App extends Component {
   constructor(){
@@ -21,14 +20,14 @@ class App extends Component {
 
   render(){
     return (
-      <div className="App container">
-        <h1>Hello</h1>
-        {this.state.route === 'one' ? (
-          <OneRecipe routeChange={this.Routing} id={this.state.handeledReipeId} />
-        ) : (
-          <Recipes routeChange={this.Routing} handeldRecipe={this.handeldRecipe} />
-        )}
-      </div>
+        <div className="App container">
+          <h1>Hello</h1>
+          {this.state.route === 'one' ? (
+            <OneRecipe routeChange={this.Routing} id={this.state.handeledReipeId} />
+          ) : (
+            <Recipes routeChange={this.Routing} handeldRecipe={this.handeldRecipe} />
+          )}
+        </div>
     );
   }
 }

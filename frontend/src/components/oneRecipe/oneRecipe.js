@@ -13,6 +13,17 @@ class OneRecipe extends Component {
       .then((response) => response.json())
       .then((recipe) => this.setState({ recipe }));
   }
+  delete = () => {
+    let confirm = window.confirm('Are you sure you want to delete this recipe?');
+    if (confirm) {
+      console.log(this.props.id)
+      fetch(`http://localhost:5000/delete/${this.props.id}`, {
+        method: 'delete',
+      }).then(setTimeout(()=>{},2000))
+        .then(this.props.routeChange('recipes'))
+        .catch((err) => console.log(err));
+    }
+  };
   render() {
     let { recipe } = this.state;
     return (
@@ -30,7 +41,7 @@ class OneRecipe extends Component {
               <small className="text-muted">{recipe.ingredients}</small>
             </p>
           <button className="btn btn-primary m-3">Edit</button>
-          <button className="btn btn-primary m-3">Delete</button>
+          <button className="btn btn-primary m-3" onClick={()=>this.delete()}>Delete</button>
           </div>
         </div>
       </div>
