@@ -6,6 +6,9 @@ class OneRecipe extends Component {
     this.state = {
       recipe: [],
       editStatus: false,
+      title: '',
+      ingredients: '',
+      rec: '',
     };
   }
 
@@ -13,6 +16,21 @@ class OneRecipe extends Component {
     fetch(`http://localhost:5000/recipe/${this.props.id}`)
       .then((response) => response.json())
       .then((recipe) => this.setState({ recipe }));
+  }
+
+  onInputChange = (e) => {
+    let { name, value } = e.target;
+    if (name === 'title') {
+      this.setState({ title: value });
+    } else if (name === 'ingredients') {
+      this.setState({ ingredients: value });
+    } else if (name === 'recipe') {
+      this.setState({ rec: value });
+    }
+  };
+
+  onSubmit = ()=>{
+    console.log(this.state)
   }
 
   edit = () => {
@@ -66,22 +84,39 @@ class OneRecipe extends Component {
         {this.state.editStatus ? (
           <div>
             <h1>Edit Form</h1>
-            <form>
-            <div class="form-group">
-              <label>Title</label>
-              <input class="form-control" value={recipe.title}/>
-            </div>
-            <div class="form-group">
-              <label>Ingredients</label>
-              <input class="form-control" value={recipe.ingredients}/>
-            </div>
-            <div class="form-group">
-              <label>recipe</label>
-              <input class="form-control" value={recipe.recipe}/>
-            </div>
-            
-            <button type="submit" class="btn btn-primary">Submit</button>
-          </form>
+            <form onSubmit={e => e.preventDefault()}>
+              <div class="form-group">
+                <label>Title</label>
+                <input
+                  name="title"
+                  class="form-control"
+                  defaultValue={recipe.title}
+                  onChange={(txt) => this.onInputChange(txt)}
+                />
+              </div>
+              <div class="form-group">
+                <label>Ingredients</label>
+                <input
+                  name="ingredients"
+                  class="form-control"
+                  defaultValue={recipe.ingredients}
+                  onChange={(txt) => this.onInputChange(txt)}
+                />
+              </div>
+              <div class="form-group">
+                <label>recipe</label>
+                <input
+                  name="recipe"
+                  class="form-control"
+                  defaultValue={recipe.recipe}
+                  onChange={(txt) => this.onInputChange(txt)}
+                />
+              </div>
+
+              <button onClick={()=>this.onSubmit()} class="btn btn-primary">
+                Submit
+              </button>
+            </form>
           </div>
         ) : (
           <div></div>
