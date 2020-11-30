@@ -5,6 +5,7 @@ class OneRecipe extends Component {
     super();
     this.state = {
       recipe: [],
+      editStatus: false,
     };
   }
 
@@ -13,13 +14,21 @@ class OneRecipe extends Component {
       .then((response) => response.json())
       .then((recipe) => this.setState({ recipe }));
   }
+
+  edit = () => {
+    this.setState({ editStatus: true });
+  };
+
   delete = () => {
-    let confirm = window.confirm('Are you sure you want to delete this recipe?');
+    let confirm = window.confirm(
+      'Are you sure you want to delete this recipe?'
+    );
     if (confirm) {
-      console.log(this.props.id)
+      console.log(this.props.id);
       fetch(`http://localhost:5000/delete/${this.props.id}`, {
         method: 'delete',
-      }).then(setTimeout(()=>{},2000))
+      })
+        .then(setTimeout(() => {}, 2000))
         .then(this.props.routeChange('recipes'))
         .catch((err) => console.log(err));
     }
@@ -40,10 +49,43 @@ class OneRecipe extends Component {
             <p className="card-text">
               <small className="text-muted">{recipe.ingredients}</small>
             </p>
-          <button className="btn btn-primary m-3">Edit</button>
-          <button className="btn btn-primary m-3" onClick={()=>this.delete()}>Delete</button>
+            <button
+              className="btn btn-primary m-3"
+              onClick={() => this.edit()}
+            >
+              Edit
+            </button>
+            <button
+              className="btn btn-primary m-3"
+              onClick={() => this.delete()}
+            >
+              Delete
+            </button>
           </div>
         </div>
+        {this.state.editStatus ? (
+          <div>
+            <h1>Edit Form</h1>
+            <form>
+            <div class="form-group">
+              <label>Title</label>
+              <input class="form-control" value={recipe.title}/>
+            </div>
+            <div class="form-group">
+              <label>Ingredients</label>
+              <input class="form-control" value={recipe.ingredients}/>
+            </div>
+            <div class="form-group">
+              <label>recipe</label>
+              <input class="form-control" value={recipe.recipe}/>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+          </div>
+        ) : (
+          <div></div>
+        )}
       </div>
     );
   }
