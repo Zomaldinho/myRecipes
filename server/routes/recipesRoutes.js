@@ -13,13 +13,12 @@ let storage = multer.diskStorage({
 let upload = multer({ storage });
 
 router.post('/recipe/create', upload.single('recipeImg'), (req, res) => {
-  let { title, ingredients, recipe, owner } = req.body;
+  let { title, ingredients, recipe } = req.body;
   let { path } = req.file;
   let rec = new Recipe({
     title,
     ingredients,
     recipe,
-    owner,
     image: path,
   });
   rec

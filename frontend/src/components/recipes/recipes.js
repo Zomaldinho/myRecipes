@@ -12,11 +12,6 @@ class Recipes extends Component {
       .then((response) => response.json())
       .then((data) => this.setState({ data }));
   }
-  // componentDidUpdate(){
-  //   fetch('http://localhost:5000/')
-  //     .then((response) => response.json())
-  //     .then((data) => this.setState({ data }));
-  // }
 
   showOne(i){
     this.props.handeldRecipe(i)
@@ -24,7 +19,6 @@ class Recipes extends Component {
   }
 
   render() {
-    console.log(this.state.data);
     return (
       <div className="d-flex flex-wrap">
         {this.state.data.map((recipe, i) => {

@@ -44,7 +44,7 @@ class App extends Component {
             handeldRecipe={this.handeldRecipe}
           />
         ) : this.state.route === 'new' ? (
-          <NewRecipe/>
+          <NewRecipe routeChange={this.Routing}/>
         ) : (
           <div></div>
         )}

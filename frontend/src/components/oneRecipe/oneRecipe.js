@@ -37,8 +37,6 @@ class OneRecipe extends Component {
   };
 
   onSubmit = () => {
-    console.log(this.state);
-
     if (!this.state.title || !this.state.ingredients || !this.state.rec) {
       return alert(
         'You can not submit empty Title, Ingredients and/or Recipe'
@@ -55,7 +53,6 @@ class OneRecipe extends Component {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data)
         if (data._id) {
           this.setState({ recipe: data });
         }
@@ -73,7 +70,6 @@ class OneRecipe extends Component {
       'Are you sure you want to delete this recipe?'
     );
     if (confirm) {
-      console.log(this.props.id);
       fetch(`http://localhost:5000/delete/${this.props.id}`, {
         method: 'delete',
       })
