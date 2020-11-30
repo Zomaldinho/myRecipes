@@ -11,6 +11,7 @@ class NewRecipe extends Component {
     };
   }
 
+  //Handling onClick of submit button of add new recipe
   onSubmit = () => {
     let data = new FormData();
     data.append('recipeImg', this.state.image);
@@ -22,14 +23,14 @@ class NewRecipe extends Component {
       body: data,
     })
       .then((response) => response.json())
-      .then((success) => this.props.routeChange('home'))
+      .then(() => this.props.routeChange('home'))
       .catch((error) => console.log(error));
   };
 
   render() {
     return (
-      <div>
-        <form onSubmit={(e) => e.preventDefault()}>
+      <div className='d-flex justify-content-center'>
+        <form onSubmit={(e) => e.preventDefault()} className='w-50'>
           <div className="form-group">
             <label>Title</label>
             <input
@@ -40,7 +41,7 @@ class NewRecipe extends Component {
           </div>
           <div className="form-group">
             <label>Ingredients</label>
-            <input
+            <input className='w-50'
               name="ingredients"
               className="form-control"
               onChange={(txt) =>

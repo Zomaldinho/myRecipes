@@ -25,6 +25,7 @@ class OneRecipe extends Component {
       );
   }
 
+  //Handling onclick of submit button of edit form
   onSubmit = () => {
     if (!this.state.title || !this.state.ingredients || !this.state.rec) {
       return alert(
@@ -50,6 +51,7 @@ class OneRecipe extends Component {
     this.setState({ editStatus: false });
   };
 
+  //Handling onClick of delete button
   delete = () => {
     let confirm = window.confirm(
       'Are you sure you want to delete this recipe?'
@@ -62,6 +64,7 @@ class OneRecipe extends Component {
         .catch((err) => console.log(err));
     }
   };
+
   render() {
     let { recipe } = this.state;
     return (
@@ -94,9 +97,8 @@ class OneRecipe extends Component {
           </div>
         </div>
         {this.state.editStatus ? (
-          <div>
-            <h1>Edit Form</h1>
-            <form onSubmit={(e) => e.preventDefault()}>
+          <div className="d-flex justify-content-center">
+            <form onSubmit={(e) => e.preventDefault()} className="w-50">
               <div className="form-group">
                 <label>Title</label>
                 <input
@@ -132,9 +134,16 @@ class OneRecipe extends Component {
               <button
                 type="button"
                 onClick={() => this.onSubmit()}
-                className="btn btn-primary"
+                className="btn btn-primary m-2"
               >
                 Submit
+              </button>
+              <button
+                type="button"
+                onClick={() => this.setState({ editStatus: false })}
+                className="btn btn-primary m-2"
+              >
+                Cancel
               </button>
             </form>
           </div>

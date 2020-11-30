@@ -21,9 +21,9 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App container">
-        <div className="d-flex justify-content-between">
-          <h1>My Recipes</h1>
+      <div className="App container bg-light">
+        <div className="d-flex justify-content-between bg-primary">
+          <h1 className='text-white'>My Recipes</h1>
           <div>
             <a className="btn btn-primary m-2" onClick={()=>this.Routing('home')}>
               Home
