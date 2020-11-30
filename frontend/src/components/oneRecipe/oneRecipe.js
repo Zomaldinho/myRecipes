@@ -77,7 +77,7 @@ class OneRecipe extends Component {
       fetch(`http://localhost:5000/delete/${this.props.id}`, {
         method: 'delete',
       })
-        .then(this.props.routeChange('recipes'))
+        .then(this.props.routeChange('home'))
         .catch((err) => console.log(err));
     }
   };

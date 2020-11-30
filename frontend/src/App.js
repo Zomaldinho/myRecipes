@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
 import Recipes from './components/recipes/recipes';
-import OneRecipe from './components/oneRecipe/oneRecipe'
+import OneRecipe from './components/oneRecipe/oneRecipe';
 
 class App extends Component {
-  constructor(){
-    super()
-    this.state={
-      route: '',
-      handeledReipeId: null
-    }
+  constructor() {
+    super();
+    this.state = {
+      route: 'home',
+      handeledReipeId: null,
+    };
   }
   Routing = (route) => {
     this.setState({ route: route });
@@ -18,16 +18,36 @@ class App extends Component {
     this.setState({ handeledReipeId: id });
   };
 
-  render(){
+  render() {
     return (
-        <div className="App container">
-          <h1>Hello</h1>
-          {this.state.route === 'one' ? (
-            <OneRecipe routeChange={this.Routing} id={this.state.handeledReipeId} />
-          ) : (
-            <Recipes routeChange={this.Routing} handeldRecipe={this.handeldRecipe} />
-          )}
+      <div className="App container">
+        <div className="d-flex justify-content-between">
+          <h1>My Recipes</h1>
+          <div>
+            <a className="btn btn-primary m-2" onClick={()=>this.Routing('home')}>
+              Home
+            </a>
+            <a className="btn btn-primary m-2" onClick={()=>this.Routing('new')}>
+              Add New Recipe
+            </a>
+          </div>
         </div>
+        {this.state.route === 'one' ? (
+          <OneRecipe
+            routeChange={this.Routing}
+            id={this.state.handeledReipeId}
+          />
+        ) : this.state.route === 'home' ? (
+          <Recipes
+            routeChange={this.Routing}
+            handeldRecipe={this.handeldRecipe}
+          />
+        ) : this.state.route === 'new' ? (
+          <div>NEW Recipe</div>
+        ) : (
+          <div></div>
+        )}
+      </div>
     );
   }
 }

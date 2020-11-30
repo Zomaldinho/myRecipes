@@ -26,7 +26,7 @@ class Recipes extends Component {
   render() {
     console.log(this.state.data);
     return (
-      <div className="d-flex flex-row">
+      <div className="d-flex flex-wrap">
         {this.state.data.map((recipe, i) => {
           return (
             <div className="card m-3" style={{width: '18rem'}}>
