@@ -25,17 +25,6 @@ class OneRecipe extends Component {
       );
   }
 
-  onInputChange = (e) => {
-    let { name, value } = e.target;
-    if (name === 'title') {
-      this.setState({ title: value });
-    } else if (name === 'ingredients') {
-      this.setState({ ingredients: value });
-    } else if (name === 'recipe') {
-      this.setState({ rec: value });
-    }
-  };
-
   onSubmit = () => {
     if (!this.state.title || !this.state.ingredients || !this.state.rec) {
       return alert(
@@ -59,10 +48,6 @@ class OneRecipe extends Component {
       })
       .catch((err) => console.log(err));
     this.setState({ editStatus: false });
-  };
-
-  edit = () => {
-    this.setState({ editStatus: true });
   };
 
   delete = () => {
@@ -95,7 +80,7 @@ class OneRecipe extends Component {
             </p>
             <button
               className="btn btn-primary m-3"
-              onClick={() => this.edit()}
+              onClick={() => this.setState({ editStatus: true })}
             >
               Edit
             </button>
@@ -105,6 +90,7 @@ class OneRecipe extends Component {
             >
               Delete
             </button>
+            {this.state.editStatus ? <p>Edit Form is Below</p> : <div></div>}
           </div>
         </div>
         {this.state.editStatus ? (
@@ -117,7 +103,9 @@ class OneRecipe extends Component {
                   name="title"
                   className="form-control"
                   defaultValue={recipe.title}
-                  onChange={(txt) => this.onInputChange(txt)}
+                  onChange={(txt) =>
+                    this.setState({ title: txt.target.value })
+                  }
                 />
               </div>
               <div className="form-group">
@@ -126,7 +114,9 @@ class OneRecipe extends Component {
                   name="ingredients"
                   className="form-control"
                   defaultValue={recipe.ingredients}
-                  onChange={(txt) => this.onInputChange(txt)}
+                  onChange={(txt) =>
+                    this.setState({ ingredients: txt.target.value })
+                  }
                 />
               </div>
               <div className="form-group">
@@ -135,11 +125,15 @@ class OneRecipe extends Component {
                   name="recipe"
                   className="form-control"
                   defaultValue={recipe.recipe}
-                  onChange={(txt) => this.onInputChange(txt)}
+                  onChange={(txt) => this.setState({ rec: txt.target.value })}
                 />
               </div>
 
-              <button type="button" onClick={() => this.onSubmit()} className="btn btn-primary">
+              <button
+                type="button"
+                onClick={() => this.onSubmit()}
+                className="btn btn-primary"
+              >
                 Submit
               </button>
             </form>
