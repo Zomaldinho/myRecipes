@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import Recipes from './components/recipes/recipes';
 import OneRecipe from './components/oneRecipe/oneRecipe';
+import NewRecipe from './components/newRecipe/NewRecipe'
 
 class App extends Component {
   constructor() {
@@ -43,7 +44,7 @@ class App extends Component {
             handeldRecipe={this.handeldRecipe}
           />
         ) : this.state.route === 'new' ? (
-          <div>NEW Recipe</div>
+          <NewRecipe/>
         ) : (
           <div></div>
         )}
