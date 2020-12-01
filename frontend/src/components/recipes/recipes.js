@@ -19,6 +19,22 @@ class Recipes extends Component {
     this.props.routeChange('one');
   }
 
+  //handling onClick of Delete button
+  delete = (id) => {
+    let confirm = window.confirm(
+      'Are you sure you want to delete this recipe?'
+    );
+    if (confirm) {
+      fetch(`https://myrecipe-be.herokuapp.com/delete/${id}`, {
+        method: 'delete',
+      })
+        .then(() => {
+          this.componentDidMount();
+        })
+        .catch((err) => console.log(err));
+    }
+  };
+
   render() {
     return (
       <div className="d-flex flex-wrap">
